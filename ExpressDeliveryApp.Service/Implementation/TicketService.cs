@@ -1,6 +1,6 @@
 ﻿using ExpressDeliveryApp.Domain;
+using ExpressDeliveryApp.Domain.Exceptions;
 using ExpressDeliveryApp.Repository.Interfaces;
-using ExpressDeliveryApp.Service.Exceptions;
 using ExpressDeliveryApp.Service.Interfaces;
 
 namespace ExpressDeliveryApp.Service.Implementation;
@@ -22,9 +22,9 @@ public class TicketService : ITicketService
 
     public async Task UpdateAsync(Ticket ticket)
     {
-        if (ticket.Status != TicketStatus.New && ticket.Status != TicketStatus.Cancelled)
-            throw new ForbiddenException("Ticket status not new or cancelled");
-        
+        if (ticket.Status != TicketStatus.New)
+            throw new ForbiddenException("Ticket status not new");
+
         await _ticketRepository.UpdateAsync(ticket);
     }
 

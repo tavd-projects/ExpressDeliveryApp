@@ -1,7 +1,8 @@
 ﻿namespace ExpressDeliveryApp.DTOs;
 
-public class RegisterTicketRequest
+public class UpdateTicketDto
 {
+    public Guid Id { get; set; }
     public string CustomerName { get; set; }
     
     public decimal WeightKg { get; set; }

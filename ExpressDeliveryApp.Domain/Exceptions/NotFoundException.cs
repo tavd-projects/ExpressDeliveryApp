@@ -1,4 +1,4 @@
-﻿namespace ExpressDeliveryApp.Service.Exceptions;
+﻿namespace ExpressDeliveryApp.Domain.Exceptions;
 
 [Serializable]
 public class NotFoundException : Exception

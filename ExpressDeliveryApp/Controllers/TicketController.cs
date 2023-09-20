@@ -22,32 +22,36 @@ public class TicketController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetTicketAsync(Guid ticketId)
     {
-        return Ok(await _ticketService.GetAsync(ticketId));
-    }
-    
-    [HttpGet]
-    public async Task<IActionResult> GetTicketsAsync()
-    {
-        return Ok(await _ticketService.GetAllAsync());
+        var ticket = await _ticketService.GetAsync(ticketId);
+        return Ok(_mapper.Map<Ticket, TicketDto>(ticket));
     }
 
-    [HttpPost]
-    public async Task<IActionResult> RegisterTicketAsync([FromBody] RegisterTicketRequest registerTicketRequest)
+    [HttpGet("all")]
+    public async Task<IActionResult> GetTicketsAsync()
     {
-        return Ok(await _ticketService.RegisterAsync(_mapper.Map<RegisterTicketRequest, Ticket>(registerTicketRequest)));
+        var tickets = await _ticketService.GetAllAsync();
+        return Ok(tickets
+            .Select(x => _mapper.Map<Ticket, TicketDto>(x)));
     }
-    
-    [HttpPut]
-    public async Task<IActionResult> UpdateTicketAsync([FromBody] UpdateTicketRequest updateTicketRequest)
+
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterTicketAsync([FromBody] RegisterTicketDto registerTicketDto)
     {
-        await _ticketService.UpdateAsync(_mapper.Map<UpdateTicketRequest, Ticket>(updateTicketRequest));
+        var id = await _ticketService.RegisterAsync(_mapper.Map<RegisterTicketDto, Ticket>(registerTicketDto));
+        return Ok(new GuidDto() { Id = id });
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateTicketAsync([FromBody] UpdateTicketDto updateTicketDto)
+    {
+        await _ticketService.UpdateAsync(_mapper.Map<UpdateTicketDto, Ticket>(updateTicketDto));
         return Ok();
     }
-    
-    [HttpPost]
-    public async Task<IActionResult> CancelTicketAsync([FromBody] CancelTicketRequest cancelTicketRequest)
+
+    [HttpPost("cancel")]
+    public async Task<IActionResult> CancelTicketAsync([FromBody] CancelTicketDto cancelTicketDto)
     {
-        await _ticketService.CancelAsync(cancelTicketRequest.Guid, cancelTicketRequest.Reason);
+        await _ticketService.CancelAsync(cancelTicketDto.Guid, cancelTicketDto.Reason);
         return Ok();
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExpressDeliveryApp.Controllers;
 
 [ApiController]
-[Route("[controller]/courier")]
+[Route("[controller]")]
 public class CourierController : ControllerBase
 {
     private readonly ICourierService _courierService;
@@ -23,16 +23,16 @@ public class CourierController : ControllerBase
     }
     
     [HttpPost("take")]
-    public async Task<IActionResult> TakeNewTicketInWorkAsync([FromBody] GuidRequest guidRequest)
+    public async Task<IActionResult> TakeNewTicketInWorkAsync([FromBody] GuidDto guidDto)
     {
-        await _courierService.TakeNewTicketInWorkAsync(guidRequest.Guid);
+        await _courierService.TakeNewTicketInWorkAsync(guidDto.Id);
         return Ok();
     }
 
     [HttpPost("accept")]
-    public async Task<IActionResult> AcceptWorkAsync([FromBody] GuidRequest guidRequest)
+    public async Task<IActionResult> AcceptWorkAsync([FromBody] GuidDto guidDto)
     {
-        await _courierService.AcceptWorkAsync(guidRequest.Guid);
+        await _courierService.AcceptWorkAsync(guidDto.Id);
         return Ok();
     }
 }
