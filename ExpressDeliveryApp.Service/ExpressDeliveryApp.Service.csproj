@@ -9,10 +9,19 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ExpressDeliveryApp.Domain\ExpressDeliveryApp.Domain.csproj" />
+      <ProjectReference Include="..\ExpressDeliveryApp.Repository\ExpressDeliveryApp.Repository.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ExpressDeliveryApp.Domain\ExpressDeliveryApp.Domain.csproj" />
+
+
+
+
+
     </ItemGroup>
+
+
+
 
 </Project>

@@ -4,5 +4,5 @@ namespace ExpressDeliveryApp.Service.Interfaces;
 
 public interface ITicketSearcherService
 {
-    Task<IEnumerable<Ticket>> SearchAsync(string text, int page, int pageSize);
+    Task<IEnumerable<Ticket>> SearchAsync(string text);
 }

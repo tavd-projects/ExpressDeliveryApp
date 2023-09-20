@@ -4,9 +4,9 @@ namespace ExpressDeliveryApp.Service.Interfaces;
 
 public interface ITicketService
 {
-    Guid RegisterAsync(Ticket ticket);
+    Task<Guid> RegisterAsync(Ticket ticket);
     Task UpdateAsync(Ticket ticket);
-    Task CancelAsync(Guid id);
+    Task CancelAsync(Guid id, string reason);
     
-    Ticket GetAsync(Guid id);
+    Task<Ticket> GetAsync(Guid id);
 }
