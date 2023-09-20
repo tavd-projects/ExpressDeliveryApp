@@ -47,4 +47,9 @@ public class TokenizerTicketSearcherService : ITicketSearcherService
     {
         return _filter.Filter(_tokenizer.Tokenize(text));
     }
+    public class SearchResult<TEntity>
+    {
+        public int Score { get; init; }
+        public TEntity Entity { get; init; }
+    }
 }
