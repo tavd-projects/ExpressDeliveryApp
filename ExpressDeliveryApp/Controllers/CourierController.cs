@@ -1,4 +1,5 @@
 ﻿using ExpressDeliveryApp.Domain;
+using ExpressDeliveryApp.DTOs;
 using ExpressDeliveryApp.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,10 +22,17 @@ public class CourierController : ControllerBase
         return Ok(await _courierService.GetNewTicketsAsync());
     }
     
-    [HttpPost]
-    public async Task<IActionResult> TakeNewTicketsInWorkAsync(Guid id)
+    [HttpPost("take")]
+    public async Task<IActionResult> TakeNewTicketInWorkAsync([FromBody] GuidRequest guidRequest)
     {
-        await _courierService.TakeNewTicketInWorkAsync(id);
+        await _courierService.TakeNewTicketInWorkAsync(guidRequest.Guid);
+        return Ok();
+    }
+
+    [HttpPost("accept")]
+    public async Task<IActionResult> AcceptWorkAsync([FromBody] GuidRequest guidRequest)
+    {
+        await _courierService.AcceptWorkAsync(guidRequest.Guid);
         return Ok();
     }
 }
