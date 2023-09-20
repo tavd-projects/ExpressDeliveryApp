@@ -1,4 +1,4 @@
-﻿namespace ExpressDeliveryApp.Models;
+﻿namespace ExpressDeliveryApp.DTOs;
 
 public class RegisterTicketRequest
 {

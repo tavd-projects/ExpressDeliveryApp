@@ -4,7 +4,7 @@ namespace ExpressDeliveryApp.Service.Interfaces;
 
 public interface ICourierService
 {
-    Task<IEnumerable<Ticket>> GetNewTicketAsync();
-    Task TakeNewTicketsInWorkAsync(Guid id);
+    Task<IEnumerable<Ticket>> GetNewTicketsAsync();
+    Task TakeNewTicketInWorkAsync(Guid id);
     Task AcceptWorkAsync(Guid id);
 }

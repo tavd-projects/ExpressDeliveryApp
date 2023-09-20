@@ -13,12 +13,12 @@ public class CourierService : ICourierService
         _ticketRepository = ticketRepository;
     }
 
-    public async Task<IEnumerable<Ticket>> GetNewTicketAsync()
+    public async Task<IEnumerable<Ticket>> GetNewTicketsAsync()
     {
         return await GetTicketsFromStatusAsync(TicketStatus.New);
     }
 
-    public async Task TakeNewTicketsInWorkAsync(Guid id)
+    public async Task TakeNewTicketInWorkAsync(Guid id)
     {
         await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.SubmittedForExecution); 
     }

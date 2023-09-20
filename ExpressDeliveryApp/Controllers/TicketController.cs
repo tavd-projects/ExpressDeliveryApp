@@ -1,6 +1,6 @@
 using AutoMapper;
 using ExpressDeliveryApp.Domain;
-using ExpressDeliveryApp.Models;
+using ExpressDeliveryApp.DTOs;
 using ExpressDeliveryApp.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
