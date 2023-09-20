@@ -9,4 +9,5 @@ public interface ITicketService
     Task CancelAsync(Guid id, string reason);
     
     Task<Ticket> GetAsync(Guid id);
+    Task<IEnumerable<Ticket>> GetAllAsync();
 }

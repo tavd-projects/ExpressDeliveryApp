@@ -1,10 +1,9 @@
-﻿namespace ExpressDeliveryApp.Domain;
+﻿namespace ExpressDeliveryApp.Models;
 
-public class Ticket : BaseEntity
+public class UpdateTicketRequest
 {
+    public Guid Id { get; set; }
     public string CustomerName { get; set; }
-    public TicketStatus Status { get; set; }
-    public string? CancelReason { get; set; }
     
     public decimal WeightKg { get; set; }
     public string Description { get; set; }

@@ -24,7 +24,7 @@ public class TicketService : ITicketService
     {
         if (ticket.Status != TicketStatus.New && ticket.Status != TicketStatus.Cancelled)
             throw new ForbiddenException("Ticket status not new or cancelled");
-
+        
         await _ticketRepository.UpdateAsync(ticket);
     }
 
@@ -53,5 +53,10 @@ public class TicketService : ITicketService
         }
 
         return ticket;
+    }
+
+    public async Task<IEnumerable<Ticket>> GetAllAsync()
+    {
+        return await _ticketRepository.GetAllAsync();
     }
 }
