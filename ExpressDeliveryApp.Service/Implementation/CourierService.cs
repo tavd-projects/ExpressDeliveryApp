@@ -1,4 +1,5 @@
 ﻿using ExpressDeliveryApp.Domain;
+using ExpressDeliveryApp.Domain.Exceptions;
 using ExpressDeliveryApp.Repository.Interfaces;
 using ExpressDeliveryApp.Service.Interfaces;
 
@@ -20,12 +21,22 @@ public class CourierService : ICourierService
 
     public async Task TakeNewTicketInWorkAsync(Guid id)
     {
-        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.SubmittedForExecution);
+        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.SubmittedForExecution,
+            TicketStatus.New);
     }
 
     public async Task AcceptWorkAsync(Guid id)
     {
-        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.Done);
+        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.Done,
+            TicketStatus.SubmittedForExecution);
+    }
+
+    private async Task ChangeStatusAsync(Ticket ticket, TicketStatus status, TicketStatus previousStatus)
+    {
+        if (ticket.Status != previousStatus)
+            throw new ForbiddenException($"Ticket status not {previousStatus}");
+
+        await ChangeStatusAsync(ticket, status);
     }
 
     private async Task ChangeStatusAsync(Ticket ticket, TicketStatus status)

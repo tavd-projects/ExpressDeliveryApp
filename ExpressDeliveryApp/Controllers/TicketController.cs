@@ -60,6 +60,7 @@ public class TicketController : ControllerBase
     [HttpGet("search")]
     public async Task<IActionResult> FullTextSearchAsync([FromQuery] SearchDto searchDto)
     {
-        return Ok(await _ticketSearcherService.SearchAsync(searchDto.Query));
+        var tickets = await _ticketSearcherService.SearchAsync(searchDto.Query);
+        return Ok(tickets.Select(x => _mapper.Map<Ticket, TicketDto>(x)));
     }
 }

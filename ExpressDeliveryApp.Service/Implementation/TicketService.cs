@@ -22,6 +22,9 @@ public class TicketService : ITicketService
 
     public async Task UpdateAsync(Ticket ticket)
     {
+        var oldTicket = await _ticketRepository.GetAsync(ticket.Id);
+        ticket.Status = oldTicket.Status;
+        
         if (ticket.Status != TicketStatus.New)
             throw new ForbiddenException("Ticket status not new");
 
