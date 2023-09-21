@@ -6,13 +6,13 @@ using ExpressDeliveryApp.Service.Interfaces;
 
 namespace ExpressDeliveryApp.Service.Implementation.CustomFullTextSearcher;
 
-public class TokenizerTicketSearcherService : ITicketSearcherService
+public class TokenizedTicketSearcherService : ITicketSearcherService
 {
     private readonly ITokenizer _tokenizer;
     private readonly IFilter _filter;
     private readonly ITicketRepository _ticketRepository;
 
-    public TokenizerTicketSearcherService(ITokenizer tokenizer, IFilter filter, ITicketRepository ticketRepository)
+    public TokenizedTicketSearcherService(ITokenizer tokenizer, IFilter filter, ITicketRepository ticketRepository)
     {
         _tokenizer = tokenizer;
         _filter = filter;
@@ -22,18 +22,18 @@ public class TokenizerTicketSearcherService : ITicketSearcherService
     public async Task<IEnumerable<Ticket>> SearchAsync(string text)
     {
         IEnumerable<string> inputFilteredTokens = TokenizeAndFilter(text);
-        
+
         var tickets = await _ticketRepository.GetAllAsync();
         var searchResults = new List<SearchResult<Ticket>>();
-        
+
         foreach (var ticket in tickets)
         {
-            IEnumerable<string> outputFilteredTokens = TokenizeAndFilter(ticket.ToString());
+            IEnumerable<string> outputFilteredTokens = TokenizeAndFilter(TicketToIndexString(ticket));
             var intersect = inputFilteredTokens.Intersect(outputFilteredTokens);
-            
-            if (intersect.Count() < 0)
+
+            if (!intersect.Any())
                 continue;
-            
+
             searchResults.Add(new SearchResult<Ticket>()
             {
                 Entity = ticket,
@@ -43,10 +43,18 @@ public class TokenizerTicketSearcherService : ITicketSearcherService
 
         return searchResults.OrderByDescending(x => x.Score).Select(x => x.Entity);
     }
+
+    private string TicketToIndexString(Ticket ticket)
+    {
+        return string.Join(' ', ticket.CancelReason, ticket.Status, ticket.Description, ticket.CustomerName, ticket.WeightKg,
+            ticket.СargoСollectionTime, ticket.Id);
+    }
+
     public IEnumerable<string> TokenizeAndFilter(string text)
     {
         return _filter.Filter(_tokenizer.Tokenize(text));
     }
+
     public class SearchResult<TEntity>
     {
         public int Score { get; init; }

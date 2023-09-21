@@ -1,8 +1,10 @@
 using System.Reflection;
 using ExpressDeliveryApp.ExceptionHandling;
+using ExpressDeliveryApp.Extensions;
 using ExpressDeliveryApp.Repository.Implementation;
 using ExpressDeliveryApp.Repository.Interfaces;
 using ExpressDeliveryApp.Service.Implementation;
+using ExpressDeliveryApp.Service.Implementation.CustomFullTextSearcher;
 using ExpressDeliveryApp.Service.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -23,6 +25,7 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<ICourierService, CourierService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 
+builder.Services.ConfigureAndAddTextSearch();
 // Database
 builder.Services.AddSingleton<ITicketRepository, InMemoryTicketRepository>();
 

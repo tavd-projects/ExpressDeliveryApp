@@ -11,11 +11,13 @@ namespace ExpressDeliveryApp.Controllers;
 public class TicketController : ControllerBase
 {
     private readonly ITicketService _ticketService;
+    private readonly ITicketSearcherService _ticketSearcherService;
     private readonly IMapper _mapper;
 
-    public TicketController(ITicketService ticketService, IMapper mapper)
+    public TicketController(ITicketService ticketService, ITicketSearcherService ticketSearcherService, IMapper mapper)
     {
         _ticketService = ticketService;
+        _ticketSearcherService = ticketSearcherService;
         _mapper = mapper;
     }
 
@@ -53,5 +55,11 @@ public class TicketController : ControllerBase
     {
         await _ticketService.CancelAsync(cancelTicketDto.Guid, cancelTicketDto.Reason);
         return Ok();
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> FullTextSearchAsync([FromQuery] SearchDto searchDto)
+    {
+        return Ok(await _ticketSearcherService.SearchAsync(searchDto.Query));
     }
 }
