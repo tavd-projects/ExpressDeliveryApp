@@ -4,7 +4,6 @@ using ExpressDeliveryApp.Extensions;
 using ExpressDeliveryApp.Repository.Implementation;
 using ExpressDeliveryApp.Repository.Interfaces;
 using ExpressDeliveryApp.Service.Implementation;
-using ExpressDeliveryApp.Service.Implementation.CustomFullTextSearcher;
 using ExpressDeliveryApp.Service.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;

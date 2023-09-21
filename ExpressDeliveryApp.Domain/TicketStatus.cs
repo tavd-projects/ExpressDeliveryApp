@@ -5,5 +5,5 @@ public enum TicketStatus
     New,
     SubmittedForExecution,
     Done,
-    Cancelled,
+    Cancelled
 }

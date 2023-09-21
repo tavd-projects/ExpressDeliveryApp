@@ -13,7 +13,7 @@ public class UpdateTicketDtoValidator : AbstractValidator<UpdateTicketDto>
         RuleFor(x => x.WeightKg).GreaterThan(0);
         RuleFor(x => x.Id).NotEmpty();
     }
-    
+
     private bool BeGreaterThanCurrentDateTime(DateTime dateTime)
     {
         return dateTime > DateTime.Now;

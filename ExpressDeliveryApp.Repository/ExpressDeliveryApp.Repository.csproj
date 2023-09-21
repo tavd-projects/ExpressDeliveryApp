@@ -8,6 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ExpressDeliveryApp.Domain\ExpressDeliveryApp.Domain.csproj" />
+        <ProjectReference Include="..\ExpressDeliveryApp.Domain\ExpressDeliveryApp.Domain.csproj"/>
     </ItemGroup>
 </Project>

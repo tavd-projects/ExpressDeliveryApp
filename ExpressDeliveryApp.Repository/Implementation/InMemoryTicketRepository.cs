@@ -6,7 +6,8 @@ namespace ExpressDeliveryApp.Repository.Implementation;
 
 public class InMemoryTicketRepository : ITicketRepository
 {
-    private readonly List<Ticket> _ticketList = new List<Ticket>();
+    private readonly List<Ticket> _ticketList = new();
+
     public async Task<Guid> CreateAsync(Ticket entity)
     {
         entity.Id = Guid.NewGuid();
@@ -22,14 +23,12 @@ public class InMemoryTicketRepository : ITicketRepository
 
     public async Task UpdateAsync(Ticket entity)
     {
-        for (int i = 0; i < _ticketList.Count; i++)
-        {
+        for (var i = 0; i < _ticketList.Count; i++)
             if (_ticketList[i].Id == entity.Id)
             {
                 _ticketList[i] = entity;
                 return;
             }
-        }
 
         throw new NotFoundException("Ticket not found");
     }

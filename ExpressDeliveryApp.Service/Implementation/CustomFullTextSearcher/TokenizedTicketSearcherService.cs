@@ -8,9 +8,9 @@ namespace ExpressDeliveryApp.Service.Implementation.CustomFullTextSearcher;
 
 public class TokenizedTicketSearcherService : ITicketSearcherService
 {
-    private readonly ITokenizer _tokenizer;
     private readonly IFilter _filter;
     private readonly ITicketRepository _ticketRepository;
+    private readonly ITokenizer _tokenizer;
 
     public TokenizedTicketSearcherService(ITokenizer tokenizer, IFilter filter, ITicketRepository ticketRepository)
     {
@@ -21,20 +21,20 @@ public class TokenizedTicketSearcherService : ITicketSearcherService
 
     public async Task<IEnumerable<Ticket>> SearchAsync(string text)
     {
-        IEnumerable<string> inputFilteredTokens = TokenizeAndFilter(text);
+        var inputFilteredTokens = TokenizeAndFilter(text);
 
         var tickets = await _ticketRepository.GetAllAsync();
         var searchResults = new List<SearchResult<Ticket>>();
 
         foreach (var ticket in tickets)
         {
-            IEnumerable<string> outputFilteredTokens = TokenizeAndFilter(TicketToIndexString(ticket));
+            var outputFilteredTokens = TokenizeAndFilter(TicketToIndexString(ticket));
             var intersect = inputFilteredTokens.Intersect(outputFilteredTokens);
 
             if (!intersect.Any())
                 continue;
 
-            searchResults.Add(new SearchResult<Ticket>()
+            searchResults.Add(new SearchResult<Ticket>
             {
                 Entity = ticket,
                 Score = intersect.Count()
@@ -46,7 +46,8 @@ public class TokenizedTicketSearcherService : ITicketSearcherService
 
     private string TicketToIndexString(Ticket ticket)
     {
-        return string.Join(' ', ticket.CancelReason, ticket.Status, ticket.Description, ticket.CustomerName, ticket.WeightKg,
+        return string.Join(' ', ticket.CancelReason, ticket.Status, ticket.Description, ticket.CustomerName,
+            ticket.WeightKg,
             ticket.СargoСollectionTime, ticket.Id);
     }
 

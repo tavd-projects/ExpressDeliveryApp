@@ -12,7 +12,7 @@ public static class FullTextSearchExtensions
         serviceCollection.AddScoped<IFilter, LowerCaseFilter>();
         serviceCollection.AddScoped<ITokenizer, WhiteSpaceTokenizer>();
         serviceCollection.AddScoped<ITicketSearcherService, TokenizedTicketSearcherService>();
-        
+
         return serviceCollection;
     }
 }

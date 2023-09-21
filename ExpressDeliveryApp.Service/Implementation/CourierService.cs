@@ -20,7 +20,7 @@ public class CourierService : ICourierService
 
     public async Task TakeNewTicketInWorkAsync(Guid id)
     {
-        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.SubmittedForExecution); 
+        await ChangeStatusAsync(await _ticketRepository.GetAsync(id), TicketStatus.SubmittedForExecution);
     }
 
     public async Task AcceptWorkAsync(Guid id)
@@ -33,6 +33,7 @@ public class CourierService : ICourierService
         ticket.Status = status;
         await _ticketRepository.UpdateAsync(ticket);
     }
+
     private async Task<IEnumerable<Ticket>> GetTicketsFromStatusAsync(TicketStatus ticketStatus)
     {
         var tickets = await _ticketRepository.GetAllAsync();

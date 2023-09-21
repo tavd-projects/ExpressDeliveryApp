@@ -12,6 +12,6 @@ public class DefaultProfile : Profile
         CreateMap<TicketDto, Ticket>().ReverseMap();
         CreateMap<RegisterTicketDto, Ticket>().ReverseMap();
         CreateMap<UpdateTicketDto, Ticket>().ReverseMap();
-        CreateMap<Ticket,TicketDto>().ReverseMap();
+        CreateMap<Ticket, TicketDto>().ReverseMap();
     }
 }

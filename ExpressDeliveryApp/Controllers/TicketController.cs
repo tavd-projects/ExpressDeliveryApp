@@ -10,9 +10,9 @@ namespace ExpressDeliveryApp.Controllers;
 [Route("[controller]")]
 public class TicketController : ControllerBase
 {
-    private readonly ITicketService _ticketService;
-    private readonly ITicketSearcherService _ticketSearcherService;
     private readonly IMapper _mapper;
+    private readonly ITicketSearcherService _ticketSearcherService;
+    private readonly ITicketService _ticketService;
 
     public TicketController(ITicketService ticketService, ITicketSearcherService ticketSearcherService, IMapper mapper)
     {
@@ -40,7 +40,7 @@ public class TicketController : ControllerBase
     public async Task<IActionResult> RegisterTicketAsync([FromBody] RegisterTicketDto registerTicketDto)
     {
         var id = await _ticketService.RegisterAsync(_mapper.Map<RegisterTicketDto, Ticket>(registerTicketDto));
-        return Ok(new GuidDto() { Id = id });
+        return Ok(new GuidDto { Id = id });
     }
 
     [HttpPut]

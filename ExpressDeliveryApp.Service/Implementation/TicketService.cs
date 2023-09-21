@@ -33,9 +33,7 @@ public class TicketService : ITicketService
         var ticket = await GetAsync(id);
 
         if (ticket.Status is TicketStatus.Cancelled)
-        {
             throw new TicketAlreadyCancelledException("Ticket already cancelled");
-        }
 
         ticket.Status = TicketStatus.Cancelled;
         ticket.CancelReason = reason;
@@ -46,11 +44,8 @@ public class TicketService : ITicketService
     public async Task<Ticket> GetAsync(Guid id)
     {
         var ticket = await _ticketRepository.GetAsync(id);
-        
-        if (ticket is null)
-        {
-            throw new NotFoundException("Ticket not found");
-        }
+
+        if (ticket is null) throw new NotFoundException("Ticket not found");
 
         return ticket;
     }
