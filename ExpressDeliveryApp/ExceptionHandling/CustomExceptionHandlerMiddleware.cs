@@ -31,21 +31,14 @@ public class CustomExceptionHandlerMiddleware
 
         var message = new { Error = exception.Message };
 
-        switch (exception)
+        code = exception switch
         {
-            case ForbiddenException _:
-                code = HttpStatusCode.Forbidden;
-                break;
-            case NotFoundException _:
-                code = HttpStatusCode.NotFound;
-                break;
-            case TicketAlreadyCancelledException _:
-                code = HttpStatusCode.BadRequest;
-                break;
-            case ArgumentException _:
-                code = HttpStatusCode.BadRequest;
-                break;
-        }
+            ForbiddenException _ => HttpStatusCode.Forbidden,
+            NotFoundException _ => HttpStatusCode.NotFound,
+            TicketAlreadyCancelledException _ => HttpStatusCode.BadRequest,
+            ArgumentException _ => HttpStatusCode.BadRequest,
+            _ => code
+        };
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;

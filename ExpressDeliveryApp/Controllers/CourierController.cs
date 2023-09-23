@@ -1,4 +1,6 @@
-﻿using ExpressDeliveryApp.DTOs;
+﻿using AutoMapper;
+using ExpressDeliveryApp.Domain;
+using ExpressDeliveryApp.DTOs;
 using ExpressDeliveryApp.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +11,18 @@ namespace ExpressDeliveryApp.Controllers;
 public class CourierController : ControllerBase
 {
     private readonly ICourierService _courierService;
+    private readonly IMapper _mapper;
 
-    public CourierController(ICourierService courierService)
+    public CourierController(ICourierService courierService, IMapper mapper)
     {
         _courierService = courierService;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetNewTicketAsync()
     {
-        return Ok(await _courierService.GetNewTicketsAsync());
+        return Ok((await _courierService.GetNewTicketsAsync()).Select(x => _mapper.Map<Ticket, TicketDto>(x)));
     }
 
     [HttpPost("take")]

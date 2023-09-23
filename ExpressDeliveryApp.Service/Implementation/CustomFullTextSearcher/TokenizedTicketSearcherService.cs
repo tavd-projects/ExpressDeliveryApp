@@ -51,12 +51,12 @@ public class TokenizedTicketSearcherService : ITicketSearcherService
             ticket.СargoСollectionTime, ticket.Id);
     }
 
-    public IEnumerable<string> TokenizeAndFilter(string text)
+    private IEnumerable<string> TokenizeAndFilter(string text)
     {
         return _filter.Filter(_tokenizer.Tokenize(text));
     }
 
-    public class SearchResult<TEntity>
+    private class SearchResult<TEntity>
     {
         public int Score { get; init; }
         public TEntity Entity { get; init; }
