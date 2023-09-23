@@ -53,7 +53,7 @@ public class TicketController : ControllerBase
     [HttpPost("cancel")]
     public async Task<IActionResult> CancelTicketAsync([FromBody] CancelTicketDto cancelTicketDto)
     {
-        await _ticketService.CancelAsync(cancelTicketDto.Guid, cancelTicketDto.Reason);
+        await _ticketService.CancelAsync(cancelTicketDto.Id, cancelTicketDto.Reason);
         return Ok();
     }
 

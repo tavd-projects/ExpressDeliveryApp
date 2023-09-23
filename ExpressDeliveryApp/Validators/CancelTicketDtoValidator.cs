@@ -7,7 +7,7 @@ public class CancelTicketDtoValidator : AbstractValidator<CancelTicketDto>
 {
     public CancelTicketDtoValidator()
     {
-        RuleFor(x => x.Guid).NotEmpty();
+        RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.Reason).NotEmpty().MinimumLength(5);
     }
 }
